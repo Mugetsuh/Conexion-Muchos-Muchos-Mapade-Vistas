@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <style type="text/css">
+        .ui-datalist {
+            width:300px;
+            margin-bottom: 20px;
+        }
+
+        .ui-datalist-item {
+            padding:3px;
+        }
+
+        .paginated .ui-datalist-data {
+            padding-left: 20px;
+        }
+    </style>
+    <h:body>
+
+        <h:form>
+            <h:commandButton actionListener="#{indexController.claveEstudiante}" value="Hacer" />
+            <p:panel id="panelEstudiante">
+                <h3>Agregar Estudiante</h3>
+                <h:panelGrid columns="2" cellpadding="10">
+                    <h4>Nombre</h4>
+                    <p:inputText id="inputNombreEstudiante"  value="#{indexController.nombreEstudiante}"/>
+                    <h4>Cedula</h4>
+                    <p:inputText id="inputCedulaEstudiante"  value= "#{indexController.claveEstudiante}"/>
+                    <h:commandButton actionListener="#{indexController.crearEstudiante()}" value="Hacer" />
+                </h:panelGrid>
+            </p:panel>
+            <p:panel id="panelClase">
+                <h3>Agregar Clase</h3>
+                <h:panelGrid columns="2" cellpadding="10">
+                    <h4>Nombre</h4>
+                    <p:inputText id="inputNombreClase"  value="#{indexController.nombreClase}"/>
+                    <h4>Duración</h4>
+                    <p:inputText id="inputDuracion"  value="#{indexController.duracionClase}"/>
+                    <h:commandButton actionListener="#{indexController.crearClase()}" value="Hacer" />
+                </h:panelGrid>
+            </p:panel>
+
+
+            <p:panel id="panelSelects">
+                <p:outputLabel value="Estudiante"></p:outputLabel>
+                <p:selectOneMenu id="estudiante" value="#{indexController.estSeleccionado}">
+                    <f:selectItem itemLabel="--Seleccione--" itemValue="" />
+                    <f:selectItems var="est" value="#{indexController.listaEst}" itemLabel="#{est.nombre}" itemValue="#{est.id_estudiante}" />
+                    
+                </p:selectOneMenu>
+                <br></br>
+                
+                <p:outputLabel value="Clase"></p:outputLabel>
+                <p:selectOneMenu id="clasesDrop" value="#{indexController.clasSeleccionado}" valueChangeListener="#{indexController.filtroEstudiantes}">
+                    <f:selectItem itemLabel="--Seleccione--" itemValue="0" />
+                    <f:selectItems var="cla" value="#{indexController.listaClas}" itemLabel="#{cla.nombreclase}" itemValue="#{cla.id_clase}" />
+                    <p:ajax update="@form:estudiante, @form:list3"/>
+                    
+                </p:selectOneMenu>
+                <br></br>
+                <h:commandButton actionListener="#{indexController.crearEstudianteClaseExistente()}" value="Hacer" />
+            </p:panel>
+
+            <p:panel id="panelListas">
+                <p:dataList var="milist" id="dataListaClase" value="#{indexController.listaEst}" type="ordered">
+                    <f:facet name="header">
+                        Estudiantes
+                    </f:facet>
+                    #{milist.nombre},#{milist.cedula}
+                </p:dataList>
+                <p:dataList var="list2" id="dataListaEstudiante" value="#{indexController.listaClas}" type="ordered">
+                    <f:facet name="header">
+                        Clase
+                    </f:facet>
+                    #{list2.nombreclase},#{list2.duracion}
+                </p:dataList>
+                
+                <p:dataList var="list3" id="list3" value="#{indexController.vistaLsta}" type="ordered">
+                    <f:facet name="header">
+                        Vista
+                    </f:facet>
+                    #{list3.estudiante},#{list3.clase}
+                </p:dataList>
+            </p:panel>
+        </h:form>
+        <br />
+    </h:body>
+</html>
+
