@@ -250,6 +250,11 @@ public class indexController implements Serializable{
      * Metodo para crear estudiante seleccionado
      */
     public void crearEstudianteClaseExistente(){
+        if(clasSeleccionado == 0 || estSeleccionado == 0){
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error debe seleccionar un estudiante y una clase", "Error" 
+            ));
+        }else{
         Clase clase = claseFacade.find(clasSeleccionado);
         Estudiante estudiante = estudianteFacade.find(estSeleccionado);
         clase.getListaEstudiante().add(estudiante);
@@ -259,7 +264,7 @@ public class indexController implements Serializable{
         FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregada", 
             "Clase Estudiante" + nombreClase + nombreEstudiante + "Agregado con Exito!"));
-        
+        }
     }
     /**
      * Metodo para filtrar estudiantes

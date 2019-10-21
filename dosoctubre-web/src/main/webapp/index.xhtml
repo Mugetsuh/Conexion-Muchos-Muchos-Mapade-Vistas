@@ -66,7 +66,7 @@
                 <p:selectOneMenu id="clasesDrop" value="#{indexController.clasSeleccionado}" valueChangeListener="#{indexController.filtroEstudiantes}">
                     <f:selectItem itemLabel="--Seleccione--" itemValue="0" />
                     <f:selectItems var="cla" value="#{indexController.listaClas}" itemLabel="#{cla.nombreclase}" itemValue="#{cla.id_clase}" />
-                    <p:ajax update="@form:panelListas, @form:list3"/>
+                    <p:ajax update="@form:estudiante, @form:list3"/>
                     
                 </p:selectOneMenu>
                 <br></br>
