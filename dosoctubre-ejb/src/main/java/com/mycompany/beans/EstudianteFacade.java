@@ -15,11 +15,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
- *
- * @author DaveHell
+ * @author Julián Parra
+ * @author Germán García
  */
 @Stateless
 public class EstudianteFacade extends AbstractFacade<Estudiante> implements IEstudianteFacade {
+
     @PersistenceContext(unitName = "Estclase_UN")
     private EntityManager em;
 
@@ -31,9 +32,14 @@ public class EstudianteFacade extends AbstractFacade<Estudiante> implements IEst
     public EstudianteFacade() {
         super(Estudiante.class);
     }
-    
+
+    /**
+     * Metodo para filtrar estudiantes 
+     * @param id_clase
+     * @return 
+     */
     @Override
-    public List<Estudiante> descartar(int id_clase){
+    public List<Estudiante> descartar(int id_clase) {
         List<Estudiante> listaCompleta = findAll();
         TypedQuery<Estudiante> consulta = em.createNamedQuery("consulta", Estudiante.class);
         consulta.setParameter("id_clase", id_clase);

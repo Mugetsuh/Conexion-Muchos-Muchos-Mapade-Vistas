@@ -16,11 +16,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
- *
- * @author DaveHell
+ * @author Julián Parra
+ * @author Germán García
  */
 @Stateless
 public class VistaFacade extends AbstractFacade<Vista> implements IVistaFacade {
+
     @PersistenceContext(unitName = "Estclase_UN")
     private EntityManager em;
 
@@ -32,7 +33,12 @@ public class VistaFacade extends AbstractFacade<Vista> implements IVistaFacade {
     public VistaFacade() {
         super(Vista.class);
     }
-    
+
+    /**
+     * Metodo para obtener estudiantes por consulta a la vista
+     * @param id
+     * @return 
+     */
     @Override
     public List<Vista> obtenerEstudiantesConStore(Integer id) {
         TypedQuery<Vista> consulta = em.createNamedQuery("consultaV", Vista.class);
@@ -47,5 +53,5 @@ public class VistaFacade extends AbstractFacade<Vista> implements IVistaFacade {
         }
         return listaGeneral;
     }
-    
+
 }

@@ -18,8 +18,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- *
- * @author DaveHell
+ * @author Julián Parra
+ * @author Germán García
  */
 @Table
 @Entity
@@ -27,17 +27,25 @@ import javax.persistence.Table;
     @NamedQuery(name = "consulta", query = "SELECT e FROM Estudiante e JOIN e.listaClase c WHERE c.id_clase = :id_clase")
 })
 public class Estudiante implements Serializable{
-    
+    /**
+     * Varialbe id_estudiante
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id_estudiante;
-    
+    /**
+     * Varialbe nombre
+     */
     @Column
     private String nombre;
-    
+    /**
+     * Varialbe cedula
+     */
     @Column
     private long cedula;
-    
+    /**
+     * Varialbe List<Clase> listaClase
+     */
     @ManyToMany(mappedBy = "listaEstudiante")
     private List<Clase> listaClase;
     

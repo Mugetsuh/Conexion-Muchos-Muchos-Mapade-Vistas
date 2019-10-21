@@ -19,24 +19,32 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
- *
- * @author DaveHell
+ * @author Julián Parra
+ * @author Germán García
  */
 @Entity
 @Table
 public class Clase implements Serializable{
-    
+    /**
+     * Varialbe id_clase
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id_clase;
-    
+    /**
+     * Varialbe nombreclase
+     */
     @Column
     private String nombreclase;
-    
+    /**
+     * Varialbe duracion
+     */
     @Column
     private int duracion;
     
-    
+    /**
+     * Varialbe List<Estudiante> listaEstudiante
+     */
     @JoinTable(name = "estudiante_clase", 
             joinColumns = @JoinColumn(name = "id_clase", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "id_estudiante", nullable = false)

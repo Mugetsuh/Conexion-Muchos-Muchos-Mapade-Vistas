@@ -10,8 +10,8 @@ import java.util.List;
 import javax.ejb.Local;
 
 /**
- *
- * @author DaveHell
+ * @author Julián Parra
+ * @author Germán García
  */
 @Local
 public interface IEstudianteFacade {

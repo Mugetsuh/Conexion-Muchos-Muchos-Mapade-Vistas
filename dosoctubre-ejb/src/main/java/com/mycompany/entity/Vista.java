@@ -14,8 +14,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- *
- * @author DaveHell
+ * @author Julián Parra
+ * @author Germán García
  */
 @Table
 @Entity
@@ -23,12 +23,20 @@ import javax.persistence.Table;
     @NamedQuery(name = "consultaV", query = "SELECT e.nombre, e.cedula, c.nombreclase FROM Estudiante e JOIN e.listaClase c WHERE c.id_clase = :id_clase")
 })
 public class Vista implements Serializable{
-    
+    /**
+     * Varialbe estudiante
+     */
     @Column
     @Id
     private String estudiante;
+    /**
+     * Varialbe cedula
+     */
     @Column
     private int cedula;
+    /**
+     * Varialbe clase
+     */
     @Column
     private String clase;
 

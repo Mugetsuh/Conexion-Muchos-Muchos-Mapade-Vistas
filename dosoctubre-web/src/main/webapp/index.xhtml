@@ -23,32 +23,54 @@
     </style>
     <h:body>
 
-        <h:form>
-            <h:commandButton actionListener="#{indexController.claveEstudiante}" value="Hacer" />
-            <p:panel id="panelEstudiante">
-                <h3>Agregar Estudiante</h3>
+        <h:form id="formulario1" style="text-align: center">     
+            <p:growl id="growl1" showDetail="true"></p:growl>
+            <p:panel id="panelEstudiante" style="text-align: center">
+                
+                <h3>#{msg.lbl_titilo1}</h3>
                 <h:panelGrid columns="2" cellpadding="10">
-                    <h4>Nombre</h4>
-                    <p:inputText id="inputNombreEstudiante"  value="#{indexController.nombreEstudiante}"/>
-                    <h4>Cedula</h4>
-                    <p:inputText id="inputCedulaEstudiante"  value= "#{indexController.claveEstudiante}"/>
-                    <h:commandButton actionListener="#{indexController.crearEstudiante()}" value="Hacer" />
+                    <h4 style="text-align: center">#{msg.lbl_nombreEstudiante}</h4>
+                    <p:inputText id="inputNombreEstudiante"  value="#{indexController.nombreEstudiante}" required="true" validatorMessage="Nombre: El dato ingresado no es un caracter valido">
+                    <f:validateRegex pattern="^[a-zA-Z]+$" />
+                        </p:inputText>
+                    <h4>#{msg.lbl_cedula}</h4>
+                    <p:inputText id="inputCedulaEstudiante"  value= "#{indexController.claveEstudiante}" required="true"> 
+                            <f:validateLength minimum="7" maximum="10"/>
+                        </p:inputText>
+                    <p:commandButton value="#{msg.btn_guardarEst}" style="background-color: green" update=":formulario1, :formulario1:growl1,  :form3:panelListas" resetValues="true"  action="#{indexController.crearEstudiante()}" />
+                    
                 </h:panelGrid>
             </p:panel>
-            <p:panel id="panelClase">
-                <h3>Agregar Clase</h3>
-                <h:panelGrid columns="2" cellpadding="10">
-                    <h4>Nombre</h4>
-                    <p:inputText id="inputNombreClase"  value="#{indexController.nombreClase}"/>
-                    <h4>Duración</h4>
-                    <p:inputText id="inputDuracion"  value="#{indexController.duracionClase}"/>
-                    <h:commandButton actionListener="#{indexController.crearClase()}" value="Hacer" />
+        </h:form>
+        <h:form id="form2">
+            <p:growl id="growl1" showDetail="true"></p:growl>
+            <p:panel id="panelClase" style="text-align: center">
+                <h3>#{msg.lbl_titulo2}</h3>
+                <h:panelGrid columns="2" cellpadding="10" style="text-align: center">
+                    <h4>#{msg.lbl_nombreClase}</h4>
+                    <p:inputText id="inputNombreClase"  value="#{indexController.nombreClase}" required="true" validatorMessage="Nombre: El dato ingresado no es un caracter valido">
+                    <f:validateRegex pattern="^[a-zA-Z]+$" />
+                        </p:inputText>
+                    <h4>#{msg.lbl_duracion}</h4>
+                    <p:inputText id="inputDuracion"  value="#{indexController.duracionClase}" required="true"> 
+                            <f:validateLength minimum="1" maximum="2"/>
+                        </p:inputText>
+                    <p:commandButton value="#{msg.btn_guardarClas}" style="background-color: green" update=":form2, :form2:growl1,  :form3:panelListas"  action="#{indexController.crearClase()}" />
+                    
                 </h:panelGrid>
             </p:panel>
-
-
-            <p:panel id="panelSelects">
-                <p:outputLabel value="Estudiante"></p:outputLabel>
+        </h:form>
+        <h:form id="form3">
+            <p:panel id="panelSelects" style="text-align: center">
+                <p:outputLabel value="#{msg.lbl_selecClase}"></p:outputLabel>
+                <p:selectOneMenu id="clasesDrop" value="#{indexController.clasSeleccionado}" valueChangeListener="#{indexController.filtroEstudiantes}">
+                    <f:selectItem itemLabel="--Seleccione--" itemValue="0" />
+                    <f:selectItems var="cla" value="#{indexController.listaClas}" itemLabel="#{cla.nombreclase}" itemValue="#{cla.id_clase}" />
+                    <p:ajax update="@form:panelListas, @form:list3"/>
+                    
+                </p:selectOneMenu>
+                <br></br>
+                <p:outputLabel value="#{msg.lbl_selectEstudiante}"></p:outputLabel>               
                 <p:selectOneMenu id="estudiante" value="#{indexController.estSeleccionado}">
                     <f:selectItem itemLabel="--Seleccione--" itemValue="" />
                     <f:selectItems var="est" value="#{indexController.listaEst}" itemLabel="#{est.nombre}" itemValue="#{est.id_estudiante}" />
@@ -56,34 +78,28 @@
                 </p:selectOneMenu>
                 <br></br>
                 
-                <p:outputLabel value="Clase"></p:outputLabel>
-                <p:selectOneMenu id="clasesDrop" value="#{indexController.clasSeleccionado}" valueChangeListener="#{indexController.filtroEstudiantes}">
-                    <f:selectItem itemLabel="--Seleccione--" itemValue="0" />
-                    <f:selectItems var="cla" value="#{indexController.listaClas}" itemLabel="#{cla.nombreclase}" itemValue="#{cla.id_clase}" />
-                    <p:ajax update="@form:estudiante, @form:list3"/>
-                    
-                </p:selectOneMenu>
-                <br></br>
-                <h:commandButton actionListener="#{indexController.crearEstudianteClaseExistente()}" value="Hacer" />
+                
+                <p:commandButton value="Asociar" style="background-color: green"  action="#{indexController.crearEstudianteClaseExistente()}" update=":formulario1, :formulario1:growl1"/>
+                
             </p:panel>
 
-            <p:panel id="panelListas">
+            <p:panel id="panelListas" style="text-align: center">
                 <p:dataList var="milist" id="dataListaClase" value="#{indexController.listaEst}" type="ordered">
                     <f:facet name="header">
-                        Estudiantes
+                        #{msg.lbl_tablaEst}
                     </f:facet>
                     #{milist.nombre},#{milist.cedula}
                 </p:dataList>
                 <p:dataList var="list2" id="dataListaEstudiante" value="#{indexController.listaClas}" type="ordered">
                     <f:facet name="header">
-                        Clase
+                        #{msg.lbl_tablasClas}
                     </f:facet>
                     #{list2.nombreclase},#{list2.duracion}
                 </p:dataList>
                 
                 <p:dataList var="list3" id="list3" value="#{indexController.vistaLsta}" type="ordered">
                     <f:facet name="header">
-                        Vista
+                        #{msg.lbl_tablaVista}
                     </f:facet>
                     #{list3.estudiante},#{list3.clase}
                 </p:dataList>

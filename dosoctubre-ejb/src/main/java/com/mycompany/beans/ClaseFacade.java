@@ -12,11 +12,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
- * @author DaveHell
+ * @author Julián Parra
+ * @author Germán García
  */
 @Stateless
 public class ClaseFacade extends AbstractFacade<Clase> implements IClaseFacade {
+
     @PersistenceContext(unitName = "Estclase_UN")
     private EntityManager em;
 
@@ -29,9 +30,14 @@ public class ClaseFacade extends AbstractFacade<Clase> implements IClaseFacade {
         super(Clase.class);
     }
 
+    /**
+     * Metodo para agregar la union de clase a estudiante
+     * @param id_clase
+     * @param id_estudiante
+     */
     @Override
     public void edit(int id_clase, int id_estudiante) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
